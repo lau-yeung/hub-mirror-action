@@ -34,7 +34,7 @@ jobs:
       - name: GitHub → GitLab镜像
         uses: ./
         with:
-          scr: github/lau-yeung
+          src: github/lau-yeung
           dst: gitlab/lau_yeung
           static_list: "SkillsV3.1"
           clone_style: ssh
