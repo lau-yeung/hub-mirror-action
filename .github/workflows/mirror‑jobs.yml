@@ -1,0 +1,44 @@
+name: 多仓库镜像同步
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  sync_to_gitee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: GitHub → Gitee镜像
+        uses: ./
+        with:
+          src: github/lau‑yeung
+          dst: gitee/lauyeung
+          static_list: "SkillsV3.1"
+          clone_style: ssh
+          src_token: ${{ secrets.SRC_GITHUB_API_TOKEN }}
+          dst_key: ${{ secrets.HUB_MIRROR_SSH_PRIVATE_KEY }}
+          force_update: true
+          debug: true
+
+  sync_to_gitlab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: GitHub → GitLab镜像
+        uses: ./
+        with:
+          src: github/lau‑yeung
+          dst: gitlab/lau_yeung
+          static_list: "SkillsV3.1"
+          clone_style: ssh
+          src_token: ${{ secrets.SRC_GITHUB_API_TOKEN }}
+          dst_key: ${{ secrets.HUB_MIRROR_SSH_PRIVATE_KEY }}
+          force_update: true
+          debug: true
